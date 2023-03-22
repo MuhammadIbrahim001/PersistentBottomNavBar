@@ -18,6 +18,22 @@ class PersistentNavBarNavigator {
                 as Route<T>));
   }
 
+  static Future<T?> pushRemoveUtilScreen<T>(
+    final BuildContext context, {
+    required final Widget screen,
+    bool? withNavBar,
+    final PageTransitionAnimation pageTransitionAnimation =
+        PageTransitionAnimation.cupertino,
+    final PageRoute<T>? customPageRoute,
+  }) {
+    withNavBar ??= true;
+    return Navigator.of(context, rootNavigator: !withNavBar).pushAndRemoveUntil(
+        customPageRoute ??
+            (getPageRoute(pageTransitionAnimation, enterPage: screen)
+                as Route<T>),
+        (final route) => false);
+  }
+
   static Future<T?> pushDynamicScreen<T>(
     final BuildContext context, {
     required final Route<T> screen,
